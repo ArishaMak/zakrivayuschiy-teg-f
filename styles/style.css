@@ -9,8 +9,614 @@
 ✦ button__text — для обозначения текстового элемента внутри кнопки
 
 */
+html {
+  block-size: 100%; /*важно для вертикального центрирования по полной высоте страницы*/
+}
+
+body {
+  min-height: 100vh; /*бади будет занимать как минимум всю высоту экрана. без него блок-сайз на пэйдже и хтмл не будет ок работать*/
+  margin: 0; /*удаляю стандартные отступы браузера для боди*/
+}
 
 .page {
+  position: relative;
+  z-index: 1;
+  /* background-image: var(--page-background-image), 
+  linear-gradient(to top, var(--background-color-main), var(--background-color-main)); */
+  /* background-size: 100% 667px, 100% 100%; размеры для каждого фона */
   min-inline-size: 320px;
   min-block-size: 100dvb;
+  font-family: var(--main-font-family, "Inter-Variable");
+  font-variation-settings: var(--main-font-weight-card);
+  /* background-attachment: scroll;  фон становится фиксированным для всей страницы */ 
+  color: var(--accent-color, #000);
+  padding-block-start: 100px;
+  background-color: var(--background-color-main, #fff);
 }
+
+.page::before {
+  content: ''; /* Обязательное свойство */
+  position: absolute; /* Фиксируем фон */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100px + var(--min-height-header));
+  z-index: -1;
+  background-image: var(--page-background-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.header { 
+  display: grid;
+  min-height: clamp(660px, 100vh, 960px);
+  /* background-image: var(--page-background-image); 
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center; */
+  /* height: 100vh; высота всей секции заголовка 
+  min-height: 667px; */
+  /* justify-content: center; выравнивание элементов внутри контейнера по главной оси 
+  justify-items: center;  /* работает со строчной осью */
+  font-family: var(--accent-font-family, "PressStart2P-Regular");
+  text-transform: uppercase;
+  line-height: normal;
+  padding-inline: 0; /* обнуляю горизонтальный паддинг */
+  /*margin-block-end: 100px;*/
+}
+
+/*.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* он будет иметь ту же высоту, что и .header 
+  z-index: -1; /* помещаем его за контентом 
+  background-image: var(--page-background-image);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}*/
+
+/* белые поля карточек */
+.header__card {
+  display: grid;
+  margin-inline: auto; /* автоматическое горизон центрирование блочн эл внутри родителя  */
+  inline-size: 100%; /* чтобы занимала всю ширину родителя */
+  border: 2px solid var(--accent-color, #000);
+  background: var(--background-color-main, #fff);
+  max-inline-size: 700px;
+  height: clamp(327px, calc(3.84976525vw + 312.56338028px), 368px); /* адаптивная высота карточки */
+  max-width: 375px;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "."
+    "content"
+    ".";
+  /*grid-template-rows: 1fr 1,5fr 1fr; */
+  /* flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center; */
+  /* три строки с адаптивной высотой */
+  grid-template-rows:
+    clamp(122px, calc(0.7511737vw + 120.9671361px), 130px) 
+    clamp(83px, calc(2.3474178vw + 74.2065727px), 108px)  
+    clamp(122px, calc(0.7511737vw + 120.9671361px), 130px);
+  /*justify-items: center; 
+  align-items: center;
+  text-align: center; */
+  margin-block-end: 100px;
+}
+
+.card__content-wrapper {
+  grid-area: content;
+  display: flex;
+  flex-direction: column; /* надпись html и закры тег будут друг под другом */
+  justify-content: center; /* надписи будут центрированы по вертикали */
+  align-items: center; /* центрир по горизонтали */
+  width: 100%; /* займет всю доступную ширину родителя */
+  height: 100%;
+  text-align: center;      
+}
+
+/* надпись html; адаптивный заголовок */
+.logo__header {
+  font-size: clamp(3.0625rem, calc(1.502347vw + 2.7103875rem), 4.0625rem); /*минимамаьный размер 49 пикселей 49/16; максимальный 65 пк*/
+  margin-block-end: 20px;
+  margin-block-start: 136px;
+  margin: 0;
+  padding-bottom: 20px;
+}
+
+.logo__header:focus {
+  outline: none;
+}
+
+/* надпись закрывающий тег; адаптивный заголовок */
+.header__title {
+  font-size: clamp(0.875rem, calc(0.01502347vw + 0.87147888rem), 0.885rem);
+  margin: 0;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content {
+  margin-top: clamp(-765px, -30vh, -243px);
+  position: relative;
+  z-index: 1;
+  /* margin-block-start: 100px; */
+  /*font-family: var(--main-font, "Inter-Variable");*/
+}
+
+.content-card-list {
+  display: flex;
+  flex-direction: column;
+  /*gap: 52px;*/
+  margin: 0 auto;
+}
+
+.content__cards-list-item {
+  background: var(--background-color-main, #fff);
+}
+
+.card {
+  display: flex;
+  max-width: 375px;
+  flex-direction: column;
+  border: 2px solid var(--accent-color, #000);
+  margin-block-end: 52px;
+}
+
+.card:last-child {
+  margin-block-end: 0;
+}
+
+.card__title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6px 10px;
+  font-family: var(--main-font-family, "Inter-Variable");
+  word-break: normal;
+  font-size: 1.125rem;
+  line-height: normal;
+  text-align: left;
+  font-weight: 715;
+  border-block-end: 2px solid var(--accent-color, #000);
+}
+
+.card__image-wrapper {
+  position: relative;
+  margin: 0;
+  min-height: 371px; /* изменить значение на 696 для декстопа */
+}
+
+/* здесь должен быть селектор для лейбла */
+.card__label {
+  position: absolute;
+  z-index: 1;
+  opacity: 0.5;
+  mix-blend-mode: hard-light;
+  font-size: 14px;
+  font-family: var(--accent-font-family, "PressStart2P-Regular");
+  color: var(--accent-color, #000);
+  line-height: normal;
+  inset-inline-end: 25px; /* отступ от конечного края строчной оси */
+  inset-block-start: 25px;
+}
+
+/* запрос возможностей; инструмент progressive enhancement*/
+@supports (
+  (-webkit-text-stroke: 1px var(--text-stroke-color, #fff)) or
+    (text-stroke: 1px var(--text-stroke-color, #fff))
+) {
+  .card__imges__label {
+    -webkit-text-stroke: 1px var(--text-stroke-color, #fff);
+  }
+}
+
+.card-image {
+  display: block; /* делаем блочным элементом */
+  object-fit: cover; /* изображен будет полностью покрывать область контейнера */
+  object-position: center; /* ценрирую изображение */
+  inline-size: 100%; /* займет 100% ширины родителя */
+  block-size: 100%; /* 100% высоты родителя */
+  border-block-end: 2px solid var(--accent-color, #000); /* рисую нижнюю границу */
+  aspect-ratio: 1 / 1; /* всегда квадратное изображение */
+}
+
+.filter-grayscale {
+  filter: grayscale(3%);
+}
+
+.filter-invert {
+  filter: invert(0.1) grayscale(10%);
+}
+
+.filter-sepia {
+  filter: sepia(10%);
+}
+
+.filter-blur {
+  filter: blur(2px);
+}
+
+.filter-hue-rotate-contrast {
+  filter: hue-rotate(1deg) contrast(1);
+}
+
+.filter-saturate {
+  filter: saturate(5%);
+}
+
+.card__conten {
+  display: flext;
+  flex-direction: column;
+}
+
+.card__content-text {
+  display: grid;
+  gap: 28px;
+  padding: 25px;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+.card__paragraph {
+  text-align: start;
+  word-wrap: normal;
+}
+
+.card__content-buttons {
+  display: flex;
+  justify-content: end; /* по главной оси */
+  align-items: stretch; /* по поперечной оси */
+  padding: 0 25px 25px 0;
+  border-bottom: 0px solid var(--accent-color, #000);
+  gap: 7px;
+}
+
+.card__icon-button {
+  display: flex;
+  min-width: 42px;
+  border: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.card__icon-button:focus {
+  outline: none;
+}
+
+.card__icon-button:focus-visible {
+  border: 2px solid currentColor;
+  transition: border-color 0.3s ease; /* сокращенное свойство для управления анимацией; 1-е - св которое будет анимироваться; ease - медл быстр бедл*/
+}
+
+.like-icon {
+  position: relative;
+  border: 2px solid transparent;
+  padding: 0;
+  font-family: var(--accent-font-family, "PressStart2P-Regular");
+  font-size: 14px;
+  background: var(--background-color-main, #fff);
+  cursor: pointer;
+  transition: border-color 0.3s transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 12.6px;
+  overflow: hidden;
+}
+
+.contour {
+  fill: var(--contour-color, #000);
+  transition: fill .1s 0s linear;
+}
+
+.main-body {
+  fill: transparent;
+  transition: fill .3s 0s linear;
+}
+
+.core {
+  fill: transparent;
+  transition: fill .3s .03s linear;
+}
+
+.like-icon:hover .core {
+  fill: var(--contour-color, #000);
+  transition: fill .3s 0s linear;
+}
+
+.like-icon:active .core {
+  fill: var(--animation-fill-core, #FF0000);
+  transition: fill .3s 0s linear;
+}
+
+.like-icon:hover .main-body {
+  fill: var(--contour-color, #000);
+  transition: fill .3s .05s linear;
+}
+
+.like-icon:active .main-body {
+  fill: var(--animation-fill-core, #FF0000);
+  transition: fill .3s .05s linear;
+}
+
+.sparks {
+  opacity: 0;
+}
+
+.is-liked .contour {
+  fill: var(--animation-fill-core, #FF0000);
+}
+
+.is-liked .main-body {
+  fill: var(--animation-fill-core, #FF0000);
+  transition: fill .3s .05s linear;
+}
+
+/* когда иконка лайкнута, сердцевина становится красной */
+.is-liked .core {
+  fill: var(--animation-fill-core, #FF0000);
+  transition: fill .3s .03s linear;
+}
+
+@keyframes sparks {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1; /* искры полностью видны только в середине анимации */
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* анимация искр */
+.is-liked .sparks {
+  animation: sparks 0.5s ease-in-out;
+}
+
+.button {
+  /*position: relative;*/
+  border: 2px solid var(--accent-color, #000);
+  font-family: var(--accent-font-family, "PressStart2P-Regular");
+  font-size: 14px;
+  background: var(--background-main-color, #fff);
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 12.6px;
+  overflow: hidden;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:focus-visible {
+  box-shadow: 2px 2px 0 currentColor;
+}
+
+.card__like-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 130px;
+  padding: 0;
+  min-height: 38px;
+  line-height: 38px;
+}
+
+.button__text {
+  line-height: 90%;
+  font-family: var(--accent-font-family, "PressStart2P-Regular");
+  font-size: 14px;
+}
+
+.button--save {
+  display: flex;
+  flex-direction: column;
+  max-height: 84px;
+  max-width: 306px;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap; 
+  gap: 8px;
+  padding: 20px 17px;
+  border: 2px solid var(--accent-color, #000);
+  background: var(--background-color-main, #FFF);
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+.save__button:focus {
+  outline: none;
+}
+
+.save__button:focus-visible {
+  box-shadow: 2px 2px 0px 0px currentColor;;
+}
+
+.save__button__icon {
+  min-height: 28px;
+  min-width: 28px;
+}
+
+.blend-botton {
+  position: relative;
+  overflow: clip;
+}
+
+.blend-botton__content {
+  color: var(--blend-content-color, #fff);
+  mix-blend-mode: difference;
+}
+
+.blend-botton::before {
+  position: absolute;
+  content: '';
+  inset: 0;
+  background-color: var(--accent-color, #000);
+  transform: translateX(-100%);
+  transition: transform .5s ease-in-out;
+}
+
+.blend-botton:hover::before {
+  transform: translateX(0);
+}
+
+.save__button__text {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 90%;
+  font-family: var(--accent-font-family, "PressStart2P-Regular");
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer {
+  display: grid;
+  justify-content: center;
+  gap: 84px;
+  max-height: 100px;
+}
+
+.modal[open] {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 40px;
+  background-color: var(--background-main-color, #fff);
+  border: 2px solid var(--accent-color, #000);
+  min-width: 341px;
+  min-height: 191px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.modal::backdrop {
+  background-color: rgb(0 0 0 / 0.75); /* opacity создаю */
+}
+
+.modal__content {
+  /* flex-shrink: 2; элемент будет сжиматься в 2 раза быстр, чем f-sh:1*/
+  display: flex;
+  flex-direction: row; 
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.modal-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.modal__icon {
+  flex-shrink: 0;
+  height: 39px;
+  width: 39px;
+  padding: 0;
+  /*padding-right: clamp(12px, 1.25vw, 20px);*/
+}
+
+.modal__title {
+  margin: 0;
+  padding-left: 0;
+  line-height: 150%;
+  font-family: var(--accent-font-family, "PressStart2P-Regular");
+  font-size: 14px;
+  color: inherit;
+  text-transform: uppercase;
+  /* margin-right: auto; прижимаю заголовок к правому краю */
+}
+
+.modal__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--accent-color, #000);
+  min-height: 38px;
+  min-width: 261px;
+}
+
+.modal__button-text {
+  font-size: 14px;
+  line-height: 90%;
+  color: inherit;
+  text-transform: uppercase;
+}
+
+@media (min-width: 1024px) {
+  .page::before {
+    /* переопределяем высоту первого фона */
+    min-height: 1060px;
+  }
+
+  .header {
+    min-height: 960px; /* высота шапки на десктопе */
+  }
+
+  /*.content {
+    transform: translateY(-465px);
+  }*/
+
+  .header__card {
+    max-width: 700px;
+  }
+
+  .card {
+    max-width: 700px;
+  }
+
+  .modal[open] {
+    min-width: 353px;
+  }
+
+  .save__button {
+    max-width: 346px;
+    flex-direction: row;
+    max-height: 55px;
+    gap: 12px;
+    padding: 20.5px 18px;
+  }
+
+  .save__button__icon {
+    width: 21px;
+    height: 21px;
+  }
+
+  .modal-flex {
+    gap: 20px;
+  }
+
+  .modal__icon {
+    height: 21px;
+    width: 21px;
+  }
+}
+
+
