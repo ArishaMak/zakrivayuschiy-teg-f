@@ -9,3 +9,130 @@
 ✦ button__text — для обозначения текстового элемента внутри кнопки
 
 */
+
+@keyframes sparks {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1; /* искры полностью видны только в середине анимации */
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* анимация искр */
+.is-liked .sparks {
+  animation: sparks 0.5s ease-in-out;
+}
+
+.card__icon-button:focus-visible {
+  border: 2px solid currentColor;
+  transition: border-color 0.3s ease; /* сокращенное свойство для управления анимацией; 1-е - св которое будет анимироваться; ease - медл быстр бедл*/
+}
+
+.like-icon:hover .core {
+  fill: var(--contour-color, #000);
+  transition: fill .3s 0s linear;
+}
+
+.like-icon:active .core {
+  fill: var(--animation-fill-core, #FF0000);
+  transition: fill .3s 0s linear;
+}
+
+.like-icon:hover .main-body {
+  fill: var(--contour-color, #000);
+  transition: fill .3s .05s linear;
+}
+
+.like-icon:active .main-body {
+  fill: var(--animation-fill-core, #FF0000);
+  transition: fill .3s .05s linear;
+}
+
+.is-liked .main-body {
+  fill: var(--animation-fill-core, #FF0000);
+  transition: fill .3s .05s linear;
+}
+
+/* когда иконка лайкнута, сердцевина становится красной */
+.is-liked .core {
+  fill: var(--animation-fill-core, #FF0000);
+  transition: fill .3s .03s linear;
+}
+
+.is-liked .contour {
+  fill: var(--animation-fill-core, #FF0000);
+}
+
+.button:focus-visible,
+.save__button:focus-visible {
+  box-shadow: 2px 2px 0 currentColor;
+  transition: box-shadow 0.3s ease;
+}
+
+.button__text
+.save__button__text {
+  line-height: 90%;
+  font-family: var(--accent-font-family, "PressStart2P"), Arial, sans-serif;
+  font-size: 14px;
+  position: relative;
+  z-index: 1;
+  color: var(--accent-color, #000); /* начальный цвет текста - чёрный */
+  transition: color 0.5s ease-in-out;
+  /*animation-fill-mode: forwards;*/
+}
+
+.blend-botton {
+  position: relative;
+  overflow: hidden;
+  background: var(--background-main-color, #fff);
+  /*transition: background-color 0.3s ease-in-out;*/
+}
+
+.blend-botton:hover {
+  background-color: var(--accent-color, #000); /* чёрный фон */
+}
+
+/* Анимация при наведении */
+.blend-botton:hover .button__text,
+.blend-botton:hover .save__button__icon {
+  /*animation: text-color-change 0.5s forwards;*/
+  color: var(--blend-content-color, #fff);
+}
+
+/* запуск обратной анимации, когда наведение убирается */
+.blend-botton:not(:hover) .button__text {
+  animation-name: text-color-change-reverse;
+}
+
+.blend-botton:not(:hover)::before {
+  animation-name: fill-background-reverse;
+}
+
+.blend-botton__content {
+  position: relative;
+  color: var(--accent-color, #000);
+  z-index: 1;
+  transition: color 0.5s ease-in-out; 
+}
+
+.blend-botton:hover .blend-botton__content {
+  color: var(--blend-content-color, #fff); /* цвет текста при наведении */
+}
+
+.blend-botton::before {
+  position: absolute;
+  content: '';
+  inset: 0;
+  background-color: var(--accent-color, #000);
+  transform: translateX(-100%);
+  z-index: 0;
+  transition: transform 0.5s ease-in-out;
+}
+
+.blend-botton:hover::before {
+  transform: translateX(0);
+}
