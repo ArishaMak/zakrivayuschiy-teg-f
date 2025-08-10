@@ -27,7 +27,7 @@
   background-repeat: no-repeat;
 }
 
-.header { 
+.header {
   display: grid;
   min-height: clamp(427px, calc(4.88732394vw + 408.87323944px), 468px);
   font-family: var(--accent-font-family, "PressStart2P"), Arial, sans-serif;
@@ -59,7 +59,7 @@
 
 /* надпись html; адаптивный заголовок */
 .logo__header {
-  font-size: clamp(49px, calc(1.97916667vw + 34.02083333px), 65px);
+  font-size: clamp(3.0625rem, 2.7104rem + 1.5023vw, 4.0625rem);
   margin: 0;
   padding-inline: 20px;
 }
@@ -137,19 +137,13 @@ main {
   line-height: normal;
   inset-inline-end: 25px; /* отступ от конечного края строчной оси */
   inset-block-start: 25px;
-  text-shadow:
-  -1px 0 var(--text-stroke-color), 
-  0 1px var(--text-stroke-color),  
-  1px 0 var(--text-stroke-color), 
-  0 -1px var(--text-stroke-color);
+  text-shadow: -1px 0 var(--text-stroke-color), 0 1px var(--text-stroke-color), 1px 0 var(--text-stroke-color), 0 -1px var(--text-stroke-color);
 }
 
 /* запрос возможностей; инструмент progressive enhancement*/
-@supports (
-  (-webkit-text-stroke: 1px var(--text-stroke-color, #fff)) or
-  (text-stroke: 1px var(--text-stroke-color, #fff))
-) {
-  .card__label { /*изм название селектора*/
+@supports ((-webkit-text-stroke: 1px var(--text-stroke-color, #fff)) or (text-stroke: 1px var(--text-stroke-color, #fff))) {
+  .card__label {
+    /*изм название селектора*/
     -webkit-text-stroke: 1px var(--text-stroke-color, #fff);
     text-shadow: none; /*добавлено*/
   }
@@ -237,7 +231,6 @@ main {
   font-size: 14px;
   background: var(--background-color-main, #fff);
   cursor: pointer;
-  transition: border-color 0.3s transparent;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -247,17 +240,17 @@ main {
 
 .contour {
   fill: var(--contour-color, #000);
-  transition: fill .1s 0s linear;
+  transition: fill 0.1s 0s linear;
 }
 
 .main-body {
   fill: transparent;
-  transition: fill .3s 0s linear;
+  transition: fill 0.3s 0s linear;
 }
 
 .core {
   fill: transparent;
-  transition: fill .3s .03s linear;
+  transition: fill 0.3s 0.03s linear;
 }
 
 .sparks {
@@ -265,7 +258,7 @@ main {
 }
 
 .is-liked .contour {
-  fill: var(--animation-fill-core, #FF0000);
+  fill: var(--animation-fill-core, #ff0000);
 }
 
 .button {
@@ -288,8 +281,13 @@ main {
   outline: none;
 }
 
+.button:focus-visible {
+	box-shadow: 2px 2px 0 var(--accent-color, #000);
+}
+
 /* общие стили для текста внутри кнопок */
-.button__text { /* ! объединенный класс для текста кнопок */
+.button__text {
+  /* ! объединенный класс для текста кнопок */
   line-height: 90%;
   font-family: var(--accent-font-family, "PressStart2P"), Arial, sans-serif;
   font-size: 14px;
@@ -304,10 +302,19 @@ main {
   padding: 0;
   min-height: 38px;
   line-height: 38px;
+  background-color: var(--background-main-color, #fff); /* Белый фон */
+  color: var(--accent-color, #000); /* Чёрный текст */
+  border: 1px solid currentColor; /* Чёрный контур */
+}
+
+.card__like-button:hover {
+  background-color: var(--accent-color, #000); /* Чёрный фон */
+  color: var(--background-main-color, #fff); /* Белый текст */
 }
 
 /* стили для кнопки "Сохранить на память" */
-.button--save { /* ! стилизация кнопки сохранения */
+.button--save {
+  /* ! стилизация кнопки сохранения */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -316,7 +323,7 @@ main {
   max-width: 306px;
   margin: 0 auto; /* центрируем кнопку */
   gap: 8px;
-  padding: 17px 16px 16px;/* устанавливаем padding: 20px сверху/снизу, 17px слева/справа */
+  padding: 17px 16px 16px; /* устанавливаем padding: 20px сверху/снизу, 17px слева/справа */
   margin-top: 50px;
   margin-bottom: 100px;
 }
@@ -330,11 +337,13 @@ main {
 }
 
 /* Стили для иконок внутри кнопок */
-.button__icon { /* ! общий класс для иконок кнопок */
+.button__icon {
+  /* ! общий класс для иконок кнопок */
   height: 28px;
   width: 28px;
   padding: 0;
-  fill: currentColor;
+  color: var(--accent-color, #000);
+  mix-blend-mode: difference;
 }
 
 .modal[open] {
@@ -358,7 +367,7 @@ main {
 
 .modal__content {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding-bottom: 20px;
@@ -377,6 +386,8 @@ main {
   height: 39px;
   width: 39px;
   padding: 0;
+  color: var(--accent-color, #000);
+  mix-blend-mode: difference;
 }
 
 .modal__title {
@@ -397,17 +408,18 @@ main {
 }
 
 /* стили для текста кнопки в модальном окне */
-  .modal__button-text { /* ! Стилизация текста модальной кнопки */
+.modal__button-text {
+  /* ! Стилизация текста модальной кнопки */
   color: inherit;
   text-transform: uppercase;
-  }
+}
 
-  .blend-botton {
+.blend-botton {
   position: relative;
   overflow: hidden;
-  }
+}
 
-  @media (min-width: 1024px) {
+@media (min-width: 1024px) {
   .header {
     min-height: 468px;
   }
@@ -435,9 +447,10 @@ main {
     font-size: 14px;
   }
 
-  .button__icon { /* ! адаптация иконки кнопки для десктопа */
-    width: clamp(21px, 1.5vw, 28px);
-    height: clamp(21px, 1.5vw, 28px);
+  .button__icon {
+    /* ! адаптация иконки кнопки для десктопа */
+    width: 21px;
+    height: 21px;
     padding: 0;
   }
 
@@ -458,5 +471,3 @@ main {
     min-width: 293px;
   }
 }
-
-

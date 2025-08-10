@@ -19,4 +19,6 @@
     --contour-color: #000;
     --animation-fill-core: #FF0000;
     --blend-content-color: #fff; /* используем для цвета текста при наведении */
-}
+    --hover-fill: #FFF;
+    --hover-contour: #000;
+  }
