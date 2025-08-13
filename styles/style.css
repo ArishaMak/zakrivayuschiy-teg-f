@@ -29,7 +29,7 @@
 
 .header {
   display: grid;
-  min-height: clamp(427px, calc(4.88732394vw + 408.87323944px), 468px);
+  max-height: 427px;
   font-family: var(--accent-font-family, "PressStart2P"), Arial, sans-serif;
   text-transform: uppercase;
   line-height: normal;
@@ -51,15 +51,13 @@
   background: var(--background-color-main, #fff);
   max-inline-size: 700px;
   max-width: 375px;
-  /*max-height: 327px; убрала лишнеее св-во*/
-  height: clamp(327px, calc(3.84976525vw + 312.56338028px), 368px); /* гибкая высота */
   margin-block-end: 100px;
   padding: 122px 16px; /* вертикальные отступы, чтобы контент не прилипал к краям */
 }
 
-/* надпись html; адаптивный заголовок */
+/* надпись html; адаптивный заголовок, но не подходит для планшетов!!*/
 .logo__header {
-  font-size: clamp(3.0625rem, 2.7104rem + 1.5023vw, 4.0625rem);
+  font-size: clamp(49px, calc(49px + (65 - 49) * ((100vw - 375px) / (1024 - 375))), 65px);
   margin: 0;
   padding-inline: 20px;
 }
@@ -70,7 +68,7 @@
 
 /* надпись закрывающий тег; адаптивный заголовок */
 .header__title {
-  font-size: clamp(14px, calc(1.08695652vw + 10.15217391px), 23px);
+  font-size: clamp(14px, calc(14px + (23 - 14) * ((100vw - 375px) / (1024 - 375))), 23px);
   margin: 0;
 }
 
@@ -281,8 +279,9 @@ main {
   outline: none;
 }
 
+/*!добавлено после третьего ревью*/
 .button:focus-visible {
-	box-shadow: 2px 2px 0 var(--accent-color, #000);
+  box-shadow: 2px 2px 0 var(--accent-color, #000);
 }
 
 /* общие стили для текста внутри кнопок */
@@ -302,11 +301,13 @@ main {
   padding: 0;
   min-height: 38px;
   line-height: 38px;
-  background-color: var(--background-main-color, #fff); /* Белый фон */
-  color: var(--accent-color, #000); /* Чёрный текст */
-  border: 1px solid currentColor; /* Чёрный контур */
+  /*добавлено после третьего ревью*/
+  background-color: var(--background-main-color, #fff); /* белый фон */
+  color: var(--accent-color, #000); /* чёрный текст */
+  border: 1px solid currentColor; /* чёрный контур */
 }
 
+/*селектор добавлен после третьего ревью*/
 .card__like-button:hover {
   background-color: var(--accent-color, #000); /* Чёрный фон */
   color: var(--background-main-color, #fff); /* Белый текст */
@@ -323,7 +324,7 @@ main {
   max-width: 306px;
   margin: 0 auto; /* центрируем кнопку */
   gap: 8px;
-  padding: 17px 16px 16px; /* устанавливаем padding: 20px сверху/снизу, 17px слева/справа */
+  padding: 17px 20px 17px; /* устанавливаем padding: 20px сверху/снизу, 17px слева/справа */
   margin-top: 50px;
   margin-bottom: 100px;
 }
@@ -340,9 +341,9 @@ main {
 .button__icon {
   /* ! общий класс для иконок кнопок */
   height: 28px;
-  width: 28px;
+  max-width: 28px;
   padding: 0;
-  color: var(--accent-color, #000);
+  fill: var(--blend-content-color, #fff);
   mix-blend-mode: difference;
 }
 
@@ -355,8 +356,8 @@ main {
   padding: 30px 40px;
   background-color: var(--background-main-color, #fff);
   border: 2px solid var(--accent-color, #000);
-  min-width: 341px;
-  min-height: 191px;
+  max-width: 341px;
+  max-height: 191px;
   overflow-y: hidden;
   overflow-x: hidden;
 }
@@ -381,12 +382,12 @@ main {
   gap: 20px;
 }
 
-.modal__icon {
+.modal__icon { /*вчера иконки отображались в live server, сегодня уже нет, хотя ничего не трогала, надеюсь так только на моем пк*/
   flex-shrink: 0;
   height: 39px;
   width: 39px;
   padding: 0;
-  color: var(--accent-color, #000);
+  fill: var(--blend-content-color, #fff);
   mix-blend-mode: difference;
 }
 
@@ -421,13 +422,17 @@ main {
 
 @media (min-width: 1024px) {
   .header {
-    min-height: 468px;
+    max-height: 468px;
   }
 
   .header__card {
     max-width: 700px;
     padding: 130px 122.5px;
-    /*height: clamp(327px, 100%, 368px);*/
+    font-size: clamp(18px, 2vw, 26px);
+  }
+
+  .logo__header {
+    font-size: 65px;
   }
 
   .card {
@@ -435,7 +440,7 @@ main {
   }
 
   .modal[open] {
-    min-width: 353px;
+    max-width: 353px;
     padding: 30px;
   }
 
@@ -467,7 +472,7 @@ main {
     width: 39px;
   }
 
-  .modal__button-text {
+  .modal__button {
     min-width: 293px;
   }
 }

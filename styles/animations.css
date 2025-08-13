@@ -10,7 +10,7 @@
 
 */
 @keyframes icon-size {
-  0% { 
+  0% {
     transform: scale(1);
   }
 
@@ -25,19 +25,24 @@
   }
   50% {
     opacity: 1; /* искры полностью видны только в середине анимации */
+    fill: #ff0000;
   }
   100% {
     opacity: 0;
+    fill: #ff0000;
   }
 }
 
 /*новое*/
-@keyframes heart {
-  from {
+@keyframes heart-scale {
+  0% {
     transform: scale(1);
   }
-  to {
-    transform: scale(1.5);
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
@@ -53,11 +58,21 @@
 
 .like-icon .core,
 .like-icon .main-body {
-  fill: #FFF;
+  fill: #fff;
 }
 
 .like-icon .contour {
   fill: #000;
+}
+
+.like-icon .core,
+.like-icon .main-body,
+.like-icon .contour {
+  transition: fill 0.3s linear;
+}
+
+.card__icon-button {
+  cursor: pointer;
 }
 
 .card__icon-button:focus-visible {
@@ -66,34 +81,30 @@
 }
 
 .card__like-button:focus-visible {
-  outline: 2px solid #FF0000; 
+  outline: 2px solid #000;
   outline-offset: 2px;
 }
 
 .like-icon:hover .core,
-.like-icon:hover .main-body {
-  fill: var(--hover-contour, #000); /* Сердцевина и основная часть становятся белыми */
-  transition: fill 0.3s linear;
-}
-
+.like-icon:hover .main-body,
 .like-icon:hover .contour {
-  fill: var(--hover-contour, #000); /* Контур становится чёрным */
+  fill: var(--hover-contour, #000);
   transition: fill 0.3s linear;
 }
 
 .like-icon:active .core,
 .like-icon:active .main-body {
-  fill: var(--active-fill, #FF0000); /* Внутренняя часть становится красной */
+  fill: var(--active-fill, #ff0000);
   transition: fill 0.3s linear;
 }
 
 .like-icon:active .contour {
-  fill: var(--hover-contour, #000); /* Контур становится чёрным */
+  fill: var(--hover-contour, #000);
   transition: fill 0.3s linear;
 }
 
 .is-liked .like-icon {
-  animation: heart 0.3s ease-in-out;
+  animation: heart-scale 0.3s ease-in-out forwards;
 }
 
 .is-liked .sparks {
@@ -101,19 +112,15 @@
 }
 
 .is-liked .core,
-.is-liked .main-body {
-  fill: var(--animation-fill-core, #FF0000);
-  transition: fill 0.3s linear;
-}
-
+.is-liked .main-body,
 .is-liked .contour {
-  fill: #000;
+  fill: #ff0000;
   transition: fill 0.3s linear;
 }
 
-.card__icon-button:focus-visible {
-  border: 2px solid currentColor;
-  transition: border-color 0.3s ease;
+.like-icon .sparks {
+  opacity: 0;
+  fill: #ff0000;
 }
 
 /*убрала лишний селектор для кнопки сохранения*/
@@ -129,21 +136,18 @@
   font-size: 14px;
   position: relative;
   z-index: 1;
-  color: var(--accent-color, #000); /* начальный цвет текста - чёрный */
-  transition: color 0.5s ease-in-out;
 }
 
 .blend-botton {
   position: relative;
   overflow: hidden;
   background: var(--background-main-color, #fff);
-  color: var(--accent-color, #000); /* Устанавливаем черный цвет текста по умолчанию */
-  transition: color 0.5s ease-in-out; /*, background-color 0.5s ease-in-out;  Плавный переход */
 }
 
 .blend-botton__content {
   position: relative;
   z-index: 1;
+  color: var(--accent-color, #000); /* начальный цвет текста - чёрный */
   transition: color 0.5s ease-in-out;
   display: flex;
   align-items: center;
@@ -152,17 +156,16 @@
 
 .blend-botton::before {
   position: absolute;
-  content: '';
+  content: "";
   inset: 0;
   background-color: var(--accent-color, #000);
-  transform: translateX(-100%);
   z-index: 0;
-  transform: translateX(-100%);
-  transition: transform 0.5s ease-in-out;
+  transform: translateX(-100%); /*изначально псевдоэл скрыт за пределами кнопки слева*/
+  transition: transform 0.5s ease-in-out; /*плавное появление*/
 }
 
 .blend-botton:hover::before {
-  transform: translateX(0);
+  transform: translateX(0); /*при наведении псевдоэл возвращ в исходн положение, плавно выезжая слева*/
 }
 
 .blend-botton:hover .blend-botton__content {
@@ -172,6 +175,6 @@
 .blend-botton:hover .like-icon .core,
 .blend-botton:hover .like-icon .main-body,
 .blend-botton:hover .like-icon .contour {
-  fill: #fff; 
+  fill: #fff;
   transition: fill 0.3s linear;
 }
