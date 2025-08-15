@@ -28,48 +28,38 @@
 }
 
 .header {
-  display: grid;
-  max-height: 427px;
-  font-family: var(--accent-font-family, "PressStart2P"), Arial, sans-serif;
-  text-transform: uppercase;
-  line-height: normal;
-  padding-inline: 0; /* обнуляю горизонтальный паддинг */
-}
-
-/*пересмотреть высоту на декстопе*/
-.header__card {
   display: flex; /* использую flexbox для простоты центрирования */
   flex-direction: column;
   justify-content: center; /* центрирую содержимое по вертикали */
   align-items: center; /* центрирую по горизонтали */
-  margin-inline: auto;
-  inline-size: 100%;
-  width: 100%;
-  text-align: center;
-  gap: 20px;
-  border: 2px solid var(--accent-color, #000);
-  background: var(--background-color-main, #fff);
-  max-inline-size: 700px;
-  max-width: 375px;
+  font-family: var(--accent-font-family, "PressStart2P"), Arial, sans-serif;
+  /*margin-block-start: 100px;*/
   margin-block-end: 100px;
-  padding: 122px 16px; /* вертикальные отступы, чтобы контент не прилипал к краям */
+  max-height: 327px;
+  inline-size: 100%;
+  max-inline-size: 700px;
+  margin-inline: auto;
+  padding-block: clamp(120px, 7.3239rem + 0.7512vw, 128px);
+  border: 2px solid var(--accent-color, #000);
+  text-align: center;
+  background-color: var(--background-color-main, #fff);
 }
 
-/* надпись html; адаптивный заголовок, но не подходит для планшетов!!*/
 .logo__header {
   font-size: clamp(49px, calc(49px + (65 - 49) * ((100vw - 375px) / (1024 - 375))), 65px);
-  margin: 0;
-  padding-inline: 20px;
+  /*font-size: clamp(3.0625rem, 2.7104rem + 1.5023vw, 4.0625rem);*/
+  text-transform: uppercase;
+  margin-block-end: 20px;
 }
 
 .logo__header:focus {
   outline: none;
 }
 
-/* надпись закрывающий тег; адаптивный заголовок */
 .header__title {
   font-size: clamp(14px, calc(14px + (23 - 14) * ((100vw - 375px) / (1024 - 375))), 23px);
-  margin: 0;
+  /*font-size: clamp(0.875rem, 0.6769rem + 0.8451vw, 1.4375rem);*/
+  text-transform: uppercase;
 }
 
 main {
@@ -181,8 +171,8 @@ main {
   filter: saturate(5%);
 }
 
-.card__conten {
-  display: flext;
+.card__content {
+  display: flex;
   flex-direction: column;
 }
 
@@ -215,10 +205,6 @@ main {
   background: transparent;
   cursor: pointer;
   padding: 0;
-}
-
-.card__icon-button:focus {
-  outline: none;
 }
 
 .like-icon {
@@ -268,20 +254,10 @@ main {
   font-size: 14px;
   color: var(--accent-color, #000);
   background: var(--background-main-color, #fff);
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, color 0.5s ease-in-out, background-color 0.5s ease-in-out;
   cursor: pointer;
   overflow: hidden;
   line-height: 12.6px;
-  transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out;
-}
-
-.button:focus {
-  outline: none;
-}
-
-/*!добавлено после третьего ревью*/
-.button:focus-visible {
-  box-shadow: 2px 2px 0 var(--accent-color, #000);
 }
 
 /* общие стили для текста внутри кнопок */
@@ -304,7 +280,7 @@ main {
   /*добавлено после третьего ревью*/
   background-color: var(--background-main-color, #fff); /* белый фон */
   color: var(--accent-color, #000); /* чёрный текст */
-  border: 1px solid currentColor; /* чёрный контур */
+  border: 2px solid var(--accent-color, #000);
 }
 
 /*селектор добавлен после третьего ревью*/
@@ -331,7 +307,7 @@ main {
 
 .button--save .button__text {
   line-height: 90%;
-  font-family: var(--accent-font-family);
+  font-family: var(--accent-font-family, "PressStart2P"), Arial, sans-serif;
   font-size: 14px;
   white-space: nowrap; /* добавляем это свойство, чтобы текст не переносился */
   border: transparent;
@@ -343,7 +319,7 @@ main {
   height: 28px;
   max-width: 28px;
   padding: 0;
-  fill: var(--blend-content-color, #fff);
+  color: var(--blend-content-color, #fff);
   mix-blend-mode: difference;
 }
 
@@ -387,7 +363,7 @@ main {
   height: 39px;
   width: 39px;
   padding: 0;
-  fill: var(--blend-content-color, #fff);
+  color: var(--blend-content-color, #fff);
   mix-blend-mode: difference;
 }
 
@@ -404,8 +380,39 @@ main {
 
 /* стили для кнопки в модальном окне */
 .modal__button {
+ position: relative;
+  overflow: hidden;
+  z-index: 0;
   min-height: 38px;
   min-width: 261px;
+  border: 2px solid var(--accent-color, #000);
+  background-color: var(--background-main-color, #fff);
+  color: var(--accent-color, #000);
+  font-family: var(--accent-font-family, "PressStart2P"), Arial, sans-serif;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal__button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%; /* изначально полностью слева */
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent-color, #000); /* цвет заливки */
+  z-index: -1; /* позади текста */
+  transition: left 0.3s ease;
+}
+
+.modal__button:hover::before {
+  left: 0; /* заливка двигается слева направо */
+}
+
+.modal__button:hover {
+  color: var(--background-main-color, #fff); /* белый текст */
+  border-color: var(--accent-color, #000); /* обводка совпадает с фоном */
+  cursor: pointer; /* курсор меняется на pointer */
 }
 
 /* стили для текста кнопки в модальном окне */
@@ -420,19 +427,37 @@ main {
   overflow: hidden;
 }
 
+/*!добавлено после третьего ревью*/
+.button__text:focus-visible,
+.modal__button:focus-visible,
+.card__like-button:focus-visible {
+  outline: none;
+  box-shadow: 2px 2px 0 var(--accent-color, #000);
+}
+
+.button__text:focus,
+.modal__button:focus,
+.card__like-button:focus {
+  outline: none;
+}
+
+.button:has(.is-liked) {
+  box-shadow: none;
+}
+
+.card__like-button:has(.is-liked) {
+  box-shadow: none;
+}
+
 @media (min-width: 1024px) {
   .header {
-    max-height: 468px;
+    max-height: 368px;
   }
 
   .header__card {
     max-width: 700px;
     padding: 130px 122.5px;
     font-size: clamp(18px, 2vw, 26px);
-  }
-
-  .logo__header {
-    font-size: 65px;
   }
 
   .card {

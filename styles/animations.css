@@ -9,13 +9,17 @@
 ✦ button__text — для обозначения текстового элемента внутри кнопки
 
 */
-@keyframes icon-size {
+@keyframes heart-scale { /*переименовала селектор и удалила лишний, также отвечающий за анимацию лайка, из кода ниже*/
   0% {
     transform: scale(1);
   }
 
-  100% {
+  50% {
     transform: scale(1.5);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
 
@@ -33,19 +37,6 @@
   }
 }
 
-/*новое*/
-@keyframes heart-scale {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.25);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 @keyframes arrow {
   0% {
     transform: translateX(0);
@@ -56,19 +47,60 @@
   }
 }
 
+@keyframes cross-appear {
+  0% {
+    opacity: 0; transform: scale(0);
+  }
+
+  50% {
+    opacity: 1; transform: scale(1.2);
+  }
+
+  100% {
+    opacity: 0; transform: scale(1);
+  }
+}
+
 .like-icon .core,
 .like-icon .main-body {
-  fill: #fff;
-}
-
-.like-icon .contour {
-  fill: #000;
-}
-
-.like-icon .core,
-.like-icon .main-body,
-.like-icon .contour {
+  fill: #fff; /* белое заполнение по умолчанию */
   transition: fill 0.3s linear;
+}
+
+.like-icon .contour {
+  fill: #000; /* черная обводка по умолчанию */
+  transition: fill 0.3s linear;
+}
+
+.like-icon .cross { /* белый крестик по умолчанию */
+  stroke: #fff; /* белый цвет */
+  stroke-width: 2px; /* толщина линии */
+  opacity: 0; /* скрыт по умолчанию */
+  transform-origin: center;
+}
+
+.like-icon:hover .core,
+.like-icon:hover .main-body {
+  fill: var(--background-color-main, #fff); 
+  
+  /* маска для эффекта заполнения */
+  -webkit-mask-image: radial-gradient(circle at center, black 0%, #fff 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: 0% 0%;
+  mask-image: radial-gradient(circle at center, black 0%, #fff 100%);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 0% 0%;
+
+  transition: mask-size 0.5s ease, -webkit-mask-size 0.5s ease;
+}
+
+.like-icon:hover .core,
+.like-icon:hover .main-body{
+  fill: var(--hover-contour, #000);
+  -webkit-mask-size: 200% 200%;
+  mask-size: 200% 200%;
 }
 
 .card__icon-button {
@@ -78,18 +110,6 @@
 .card__icon-button:focus-visible {
   border: 2px solid currentColor;
   transition: border-color 0.3s ease; /* сокращенное свойство для управления анимацией; 1-е - св которое будет анимироваться; ease - медл быстр бедл*/
-}
-
-.card__like-button:focus-visible {
-  outline: 2px solid #000;
-  outline-offset: 2px;
-}
-
-.like-icon:hover .core,
-.like-icon:hover .main-body,
-.like-icon:hover .contour {
-  fill: var(--hover-contour, #000);
-  transition: fill 0.3s linear;
 }
 
 .like-icon:active .core,
@@ -103,19 +123,24 @@
   transition: fill 0.3s linear;
 }
 
-.is-liked .like-icon {
+/*анимации и стили для лайкнутой иконки*/
+.is-liked.like-icon {
   animation: heart-scale 0.3s ease-in-out forwards;
 }
 
-.is-liked .sparks {
+.is-liked.like-icon .sparks {
   animation: sparks 0.5s ease-in-out;
 }
 
-.is-liked .core,
-.is-liked .main-body,
-.is-liked .contour {
+.is-liked.like-icon .core,
+.is-liked.like-icon .main-body,
+.is-liked.like-icon .contour {
   fill: #ff0000;
   transition: fill 0.3s linear;
+}
+
+.is-liked.like-icon .cross {
+  animation: cross-appear 0.5s ease-in-out 0s forwards;
 }
 
 .like-icon .sparks {
